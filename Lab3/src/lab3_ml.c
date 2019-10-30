@@ -42,7 +42,7 @@ volatile uint8_t bitn = 0;
 //reset bool variable
 volatile uint8_t reset =1;// true when first start up
 //Count variable
-volatile uint16_t ext_count = 0;//counter to be displayed
+volatile int16_t ext_count = 0;//counter to be displayed
 //encoder value
 volatile uint8_t encoder_val = 0;
 
@@ -282,10 +282,10 @@ ISR(TIMER0_OVF_vect)
 
   //update the count value
   if (ext_count>1023) {//bound count to 0-1023
-    ext_count = (ext_count -1023)-1;
+    ext_count = (ext_count -1024);
   }
   if (ext_count<0) {
-    ext_count = (1023+ext_count)+1;
+    ext_count = (1024+ext_count);
   }
 
   //restore PORT A and C values
@@ -350,7 +350,7 @@ uint8_t decoder(uint8_t decimal)
 //takes a 16-bit binary input value and places the appropriate equivalent 4 digit
 //BCD segment code in the array segment_data for display.
 //array is loaded at exit as:  |digit0|digit1|colon(digit2)|digit3|digit4|
-void segsum(uint16_t sum) {
+void segsum(int16_t sum) {
   uint8_t thousands = (sum/1000)%10;//parses the thousands places
   uint8_t hundreds  = (sum/100)%10;//parses the hundreds place
   uint8_t tens      = (sum/10)%10;//parses the tens places
