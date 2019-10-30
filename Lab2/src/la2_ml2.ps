@@ -1,0 +1,1179 @@
+%!PS-Adobe-3.0
+%%Title: lab2_ml2.c
+%%For: Manuel Lopez
+%%Creator: a2ps version 4.14
+%%CreationDate: Wed Oct 16 18:52:42 2019
+%%BoundingBox: 24 24 588 768
+%%DocumentData: Clean7Bit
+%%Orientation: Landscape
+%%Pages: 2
+%%PageOrder: Ascend
+%%DocumentMedia: Letter 612 792 0 () ()
+%%DocumentNeededResources: font Courier
+%%+ font Courier-Bold
+%%+ font Courier-BoldOblique
+%%+ font Courier-Oblique
+%%+ font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Symbol
+%%+ font Times-Bold
+%%+ font Times-Roman
+%%DocumentProcessColors: Black 
+%%DocumentSuppliedResources: procset a2ps-a2ps-hdr
+%%+ procset a2ps-black+white-Prolog
+%%+ encoding ISO-8859-1Encoding
+%%EndComments
+/a2psdict 200 dict def
+a2psdict begin
+%%BeginProlog
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+
+% EPSF import as in the Red Book
+/BeginInclude {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack 
+  userdict begin
+    0 setgray 0 setlinecap
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    gs_languagelevel 1 ne {
+      false setstrokeadjust false setoverprint 
+    } if
+} bind def
+
+/EndInclude {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+/BeginEPSF {
+  BeginInclude
+  /showpage { } def
+} bind def
+
+/EndEPSF {
+  EndInclude
+} bind def
+
+% Page prefeed
+/page_prefeed {         % bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} bind def
+
+/deffont {
+  findfont exch scalefont def
+} bind def
+
+/reencode_font {
+  findfont reencode 2 copy definefont pop def
+} bind def
+
+% Function c-show (str => -)
+% centers text only according to x axis.
+/c-show { 
+  dup stringwidth pop
+  2 div neg 0 rmoveto
+  show
+} bind def
+
+% Function l-show (str => -)
+% prints texts so that it ends at currentpoint
+/l-show {
+  dup stringwidth pop neg 
+  0 
+  rmoveto show
+} bind def
+
+% center-fit show (str w => -)
+% show centered, and scale currentfont so that the width is less than w
+/cfshow {
+  exch dup stringwidth pop
+  % If the title is too big, try to make it smaller
+  3 2 roll 2 copy
+  gt
+  { % if, i.e. too big
+    exch div
+    currentfont exch scalefont setfont
+  } { % ifelse
+    pop pop 
+  }
+  ifelse
+  c-show			% center title
+} bind def
+
+% Return the y size of the current font
+% - => fontsize
+/currentfontsize {
+  currentfont /FontType get 0 eq {
+    currentfont /FontMatrix get 3 get
+  }{
+    currentfont /FontMatrix get 3 get 1000 mul
+  } ifelse
+} bind def
+
+% reencode the font
+% <encoding-vector> <fontdict> -> <newfontdict>
+/reencode { %def
+  dup length 5 add dict begin
+    { %forall
+      % <vector> <key> <val>
+      1 index /FID ne 
+      { def }{ pop pop } ifelse
+    } forall
+    /Encoding exch def % -
+
+    % Use the font's bounding box to determine the ascent, descent,
+    % and overall height; don't forget that these values have to be
+    % transformed using the font's matrix.
+    % We use `load' because sometimes BBox is executable, sometimes not.
+    % Since we need 4 numbers an not an array avoid BBox from being executed
+    /FontBBox load aload pop
+    FontMatrix transform /Ascent exch def pop
+    FontMatrix transform /Descent exch def pop
+    /FontHeight Ascent Descent sub def
+
+    % Get the underline position and thickness if they're defined.
+    % Use 1 if they are not defined.
+    currentdict /FontInfo 2 copy known
+    { get
+      /UnderlinePosition 2 copy % <FontInfo> /UP <FontInfo> /UP
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+
+      /UnderlineThickness 2 copy % <FontInfo> /UT <FontInfo> /UT
+      2 copy known
+      { get }{ pop pop 1 } ifelse
+      0 exch FontMatrix transform exch pop
+      def % <FontInfo>
+      pop % -
+    }{ pop pop
+    } ifelse
+
+    currentdict
+  end 
+} bind def
+
+% composite fonts for ASCII-EUC mixed strings
+% Version 1.2 1/31/1990
+% Original Ken'ichi HANDA (handa@etl.go.jp)
+% Modified Norio Katayama (katayama@rd.nacsis.ac.jp),1998
+% Extend & Fix Koji Nakamaru (maru@on.cs.keio.ac.jp), 1999
+% Anyone can freely copy, modify, distribute this program.
+
+/copyfont {	% font-dic extra-entry-count  copyfont  font-dic
+	1 index maxlength add dict begin
+	{	1 index /FID ne 2 index /UniqueID ne and
+		{def} {pop pop} ifelse
+	} forall
+	currentdict
+	end
+} bind def
+
+/compositefont { % ASCIIFontName EUCFontName RomanScale RomanOffset Rot(T/F) compositefont font
+    /RomanRotation exch def
+    /RomanOffset exch def
+    /RomanScale exch def
+    userdict /fixeucfont_dict known not {
+	userdict begin
+	    /fixeucfont_dict 2 dict begin
+		/UpperByteEncoding [
+		    16#00 1 16#20 { pop 0 } for
+		    16#21 1 16#28 { 16#20 sub } for
+		    16#29 1 16#2F { pop 0 } for
+		    16#30 1 16#74 { 16#27 sub } for
+		    16#75 1 16#FF { pop 0 } for
+		] def
+	        /LowerByteEncoding [
+		    16#00 1 16#A0 { pop /.notdef } for
+		    16#A1 1 16#FE { 16#80 sub 16 2 string cvrs
+				    (cXX) dup 1 4 -1 roll
+				    putinterval cvn } for
+		    /.notdef
+		] def
+		currentdict
+	    end def
+	end
+    } if
+    findfont dup /FontType get 0 eq {
+	14 dict begin
+	    %
+	    % 7+8 bit EUC font
+	    %
+	    12 dict begin
+		/EUCFont exch def
+		/FontInfo (7+8 bit EUC font) readonly def
+		/PaintType 0 def
+		/FontType 0 def
+		/FontMatrix matrix def
+		% /FontName
+		/Encoding fixeucfont_dict /UpperByteEncoding get def
+		/FMapType 2 def
+		EUCFont /WMode known
+		{ EUCFont /WMode get /WMode exch def }
+		{ /WMode 0 def } ifelse
+		/FDepVector [
+		    EUCFont /FDepVector get 0 get
+		    [ 16#21 1 16#28 {} for 16#30 1 16#74 {} for ]
+		    {
+			13 dict begin
+			    /EUCFont EUCFont def
+			    /UpperByte exch 16#80 add def	
+			    % /FontName
+			    /FontInfo (EUC lower byte font) readonly def
+			    /PaintType 0 def
+			    /FontType 3 def
+			    /FontMatrix matrix def
+			    /FontBBox {0 0 0 0} def
+			    /Encoding
+				fixeucfont_dict /LowerByteEncoding get def
+			    % /UniqueID
+			    % /WMode
+			    /BuildChar {
+				gsave
+				exch dup /EUCFont get setfont
+				/UpperByte get
+				2 string
+				dup 0 4 -1 roll put
+				dup 1 4 -1 roll put
+				dup stringwidth setcharwidth
+				0 0 moveto show
+				grestore
+			    } bind def
+			    currentdict
+			end
+			/lowerbytefont exch definefont
+		    } forall
+		] def
+		currentdict
+	    end
+	    /eucfont exch definefont
+	    exch
+	    findfont 1 copyfont dup begin
+		RomanRotation {
+			/FontMatrix FontMatrix
+			[ 0 RomanScale neg RomanScale 0 RomanOffset neg 0 ]
+			matrix concatmatrix def
+		}{
+			/FontMatrix FontMatrix
+			[ RomanScale 0 0 RomanScale 0 RomanOffset ] matrix concatmatrix
+			def
+			/CDevProc
+			    {pop pop pop pop 0 exch -1000 exch 2 div 880} def
+		} ifelse
+	    end
+	    /asciifont exch definefont
+	    exch
+	    /FDepVector [ 4 2 roll ] def
+	    /FontType 0 def
+	    /WMode 0 def
+	    /FMapType 4 def
+	    /FontMatrix matrix def
+	    /Encoding [0 1] def
+	    /FontBBox {0 0 0 0} def
+%	    /FontHeight 1.0 def % XXXX
+	    /FontHeight RomanScale 1.0 ge { RomanScale }{ 1.0 } ifelse def
+	    /Descent -0.3 def   % XXXX
+	    currentdict
+	end
+	/tmpfont exch definefont
+	pop
+	/tmpfont findfont
+    }{
+	pop findfont 0 copyfont
+    } ifelse
+} def	
+
+/slantfont {	% FontName slant-degree  slantfont  font'
+    exch findfont 1 copyfont begin
+    [ 1 0 4 -1 roll 1 0 0 ] FontMatrix exch matrix concatmatrix
+    /FontMatrix exch def
+    currentdict
+    end
+} def
+
+% Function print line number (<string> # -)
+/# {
+  gsave
+    sx cw mul neg 2 div 0 rmoveto
+    f# setfont
+    c-show
+  grestore
+} bind def
+
+% -------- Some routines to enlight plain b/w printings ---------
+
+% Underline
+% width --
+/dounderline {
+  currentpoint
+  gsave
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    0 rlineto
+    stroke
+  grestore
+} bind def
+
+% Underline a string
+% string --
+/dounderlinestring {
+  stringwidth pop
+  dounderline
+} bind def
+
+/UL {
+  /ul exch store
+} bind def
+
+% Draw a box of WIDTH wrt current font
+% width --
+/dobox {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    stroke
+  grestore
+} bind def
+
+/BX {
+  /bx exch store
+} bind def
+
+% Box a string
+% string --
+/doboxstring {
+  stringwidth pop
+  dobox
+} bind def
+
+%
+% ------------- Color routines ---------------
+%
+/FG /setrgbcolor load def
+
+% Draw the background
+% width --
+/dobackground {
+  currentpoint
+  gsave
+    newpath
+    moveto
+    0 currentfont /Descent get currentfontsize mul rmoveto
+    dup 0 rlineto
+    0 currentfont /FontHeight get currentfontsize mul rlineto
+    neg 0 rlineto
+    closepath
+    bgcolor aload pop setrgbcolor
+    fill
+  grestore
+} bind def
+
+% Draw bg for a string
+% string --
+/dobackgroundstring {
+  stringwidth pop
+  dobackground
+} bind def
+
+
+/BG {
+  dup /bg exch store
+  { mark 4 1 roll ] /bgcolor exch store } if
+} bind def
+
+
+/Show {
+  bg { dup dobackgroundstring } if
+  ul { dup dounderlinestring } if
+  bx { dup doboxstring } if
+  show
+} bind def
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T {
+  cw mul x0 add
+  bg { dup currentpoint pop sub dobackground } if
+  ul { dup currentpoint pop sub dounderline } if
+  bx { dup currentpoint pop sub dobox } if
+  y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n {
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+/S {
+  Show
+} bind def
+
+%%BeginResource: procset a2ps-a2ps-hdr 2.0 2
+%%Copyright: (c) 1988, 89, 90, 91, 92, 93 Miguel Santana
+%%Copyright: (c) 1995, 96, 97, 98 Akim Demaille, Miguel Santana
+% Function title: prints page header.
+% <ct> <rt> <lt> are passed as argument
+/title { 
+  % 1. Draw the background
+  x v get y v get moveto
+  gsave
+    0 th 2 div neg rmoveto 
+    th setlinewidth
+    0.95 setgray
+    pw 0 rlineto stroke
+  grestore
+  % 2. Border it
+  gsave
+    0.7 setlinewidth
+    pw 0 rlineto
+    0 th neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+  % stk: ct rt lt
+  x v get y v get th sub 1 add moveto
+%%IncludeResource: font Helvetica
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  % 3. The left title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    fnfs 0.8 mul hm rmoveto
+    show			% left title
+  grestore
+  exch
+  % stk: ct ltw rt
+  % 4. the right title
+  gsave
+    dup stringwidth pop fnfs 0.8 mul add exch % leave space took on stack
+    dup
+    pw exch stringwidth pop fnfs 0.8 mul add sub
+    hm
+    rmoveto
+    show			% right title
+  grestore
+  % stk: ct ltw rtw
+  % 5. the center title
+  gsave
+    pw 3 1 roll
+    % stk: ct pw ltw rtw
+    3 copy 
+    % Move to the center of the left room
+    sub add 2 div hm rmoveto
+    % What is the available space in here?
+    add sub fnfs 0.8 mul sub fnfs 0.8 mul sub
+    % stk: ct space_left
+%%IncludeResource: font Helvetica-Bold
+  fHelvetica-Bold fnfs scalefont setfont
+    cfshow
+  grestore
+} bind def
+
+% Function border: prints virtual page border
+/border { %def
+  gsave				% print four sides
+    0 setgray
+    x v get y v get moveto
+    0.7 setlinewidth		% of the square
+    pw 0 rlineto
+    0 ph neg rlineto
+    pw neg 0 rlineto
+    closepath stroke
+  grestore
+} bind def
+
+% Function water: prints a water mark in background
+/water { %def
+  gsave
+    scx scy moveto rotate
+%%IncludeResource: font Times-Bold
+  fTimes-Bold 100 scalefont setfont
+    .97 setgray
+    dup stringwidth pop 2 div neg -50 rmoveto
+    show
+  grestore
+} bind def
+
+% Function rhead: prints the right header
+/rhead {  %def
+  lx ly moveto
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  l-show
+} bind def
+
+% Function footer (cf rf lf -> -)
+/footer {
+  fHelvetica fnfs 0.8 mul scalefont setfont
+  dx dy moveto
+  show
+
+  snx sny moveto
+  l-show
+  
+  fnx fny moveto
+  c-show
+} bind def
+%%EndResource
+%%BeginResource: procset a2ps-black+white-Prolog 2.0 1
+
+% Function T(ab), jumps to the n-th tabulation in the current line
+/T { 
+  cw mul x0 add y0 moveto
+} bind def
+
+% Function n: move to the next line
+/n { %def
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+} bind def
+
+% Function N: show and move to the next line
+/N {
+  Show
+  /y0 y0 bfs sub store
+  x0 y0 moveto
+}  bind def
+
+/S {
+  Show
+} bind def
+
+/p {
+  false UL
+  false BX
+  fCourier bfs scalefont setfont
+  Show
+} bind def
+
+/sy {
+  false UL
+  false BX
+  fSymbol bfs scalefont setfont
+  Show
+} bind def
+
+/k {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/K {
+  false UL
+  false BX
+  fCourier-Bold bfs scalefont setfont
+  Show
+} bind def
+
+/c {
+  false UL
+  false BX
+  fCourier-Oblique bfs scalefont setfont
+  Show
+} bind def
+
+/C {
+  false UL
+  false BX
+  fCourier-BoldOblique bfs scalefont setfont
+  Show 
+} bind def
+
+/l {
+  false UL
+  false BX
+  fHelvetica bfs scalefont setfont
+  Show
+} bind def
+
+/L {
+  false UL
+  false BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show 
+} bind def
+
+/str{
+  false UL
+  false BX
+  fTimes-Roman bfs scalefont setfont
+  Show
+} bind def
+
+/e{
+  false UL
+  true BX
+  fHelvetica-Bold bfs scalefont setfont
+  Show
+} bind def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Symbol
+%%IncludeResource: font Courier-BoldOblique
+%%BeginResource: encoding ISO-8859-1Encoding
+/ISO-8859-1Encoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright 
+/parenleft /parenright /asterisk /plus /comma /minus /period /slash 
+/zero /one /two /three /four /five /six /seven 
+/eight /nine /colon /semicolon /less /equal /greater /question 
+/at /A /B /C /D /E /F /G 
+/H /I /J /K /L /M /N /O 
+/P /Q /R /S /T /U /V /W 
+/X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore 
+/quoteleft /a /b /c /d /e /f /g 
+/h /i /j /k /l /m /n /o 
+/p /q /r /s /t /u /v /w 
+/x /y /z /braceleft /bar /braceright /asciitilde /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
+/space /exclamdown /cent /sterling /currency /yen /brokenbar /section 
+/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron 
+/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /bullet 
+/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown 
+/Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla 
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis 
+/Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply 
+/Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls 
+/agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla 
+/egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis 
+/eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide 
+/oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis 
+] def
+%%EndResource
+% Initialize page description variables.
+/sh 612 def
+/sw 792 def
+/llx 24 def
+/urx 768 def
+/ury 588 def
+/lly 24 def
+/#copies 1 def
+/th 15.000000 def
+/fnfs 11 def
+/bfs 7.493857 def
+/cw 4.496314 def
+
+% Dictionary for ISO-8859-1 support
+/iso1dict 8 dict begin
+  /fCourier ISO-8859-1Encoding /Courier reencode_font
+  /fCourier-Bold ISO-8859-1Encoding /Courier-Bold reencode_font
+  /fCourier-BoldOblique ISO-8859-1Encoding /Courier-BoldOblique reencode_font
+  /fCourier-Oblique ISO-8859-1Encoding /Courier-Oblique reencode_font
+  /fHelvetica ISO-8859-1Encoding /Helvetica reencode_font
+  /fHelvetica-Bold ISO-8859-1Encoding /Helvetica-Bold reencode_font
+  /fTimes-Bold ISO-8859-1Encoding /Times-Bold reencode_font
+  /fTimes-Roman ISO-8859-1Encoding /Times-Roman reencode_font
+currentdict end def
+/bgcolor [ 0 0 0 ] def
+/bg false def
+/ul false def
+/bx false def
+% The font for line numbering
+/f# /Helvetica findfont bfs .6 mul scalefont def
+/fSymbol /Symbol findfont def
+/hm fnfs 0.25 mul def
+/pw
+   cw 81.400000 mul
+def
+/ph
+   522.321860 th add
+def
+/pmw urx llx sub pw 2 mul sub 1 div def
+/pmh 0 def
+/v 0 def
+/x [
+  0
+  dup pmw add pw add
+] def
+/y [
+  pmh ph add 0 mul ph add
+  dup
+] def
+/scx sw 2 div def
+/scy sh 2 div def
+/snx urx def
+/sny lly 2 add def
+/dx llx def
+/dy sny def
+/fnx scx def
+/fny dy def
+/lx snx def
+/ly ury fnfs 0.8 mul sub def
+/sx 0 def
+/tab 8 def
+/x0 0 def
+/y0 0 def
+%%EndSetup
+
+%%Page: (1-2) 1
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(// lab2_ml2.c) c n
+(// Manuel Lopez Alcala) N
+() p n
+(//  HARDWARE SETUP:) c n
+(//  PORTA is connected to the segments of the LED display. and to the pushbutton) N
+(s.) N
+(//  PORTA.0 corresponds to segment a, PORTA.1 corresponds to segement b, etc.) N
+(//  PORTB bits 4-6 go to a,b,c inputs of the 74HC138.) N
+(//  PORTB bit 7 goes to the PWM transistor base.) N
+() p n
+(#include) K
+( <avr/io.h>) p n
+(#include) K
+( <util/delay.h>) p n
+() N
+(//holds data to be sent to the segments. logic zero turns segment on) c n
+(uint8_t segment_data[5];) p n
+() N
+(//******************************************************************************) c n
+(//                            debounce_switches) N
+(//Checks the state of the button number passed to it. It shifts in ones till) N
+(//the button is pushed. Function returns a 1 only once per debounced button) N
+(//push so a debounce and toggle function can be implemented at the same time.) N
+(//Adapted to check all buttons from Ganssel's "Guide to Debouncing") N
+(//Expects active low pushbuttons on PINA port.  Debounce time is determined by) N
+(//external loop delay times 12.) N
+(//) N
+(uint8_t debounce_switch\(uint8_t pin\) {) p n
+(  ) S
+(static) K
+( uint16_t state[8] = {0};) p n
+(  state[pin] = \(state[pin]<<1\)|\(!bit_is_clear\(PINA,pin\)\)|0xE000;) N
+(  ) S
+(if) K
+( \(state[pin]==0xF000\) {) p n
+(    ) S
+(return) K
+( 1;) p n
+(  }) N
+(  ) S
+(return) K
+( 0;) p n
+(}) N
+() N
+(/***************Function: decoder\(\)***************************) c n
+(Description:) N
+(  Takes in an 8 bit decimal and returns the binary equivalent) N
+(  that will be used to display on the seven segement.) N
+(  Format:\(DP\)GFEDCBA) N
+(Parameters:) N
+(  - uint8_t decimal: This is the decimal that needs to be converted) N
+(Precondition: NONE) N
+(Return: uint_t binary equivalent) N
+(************************************************************************/) N
+(uint8_t decoder\(uint8_t decimal\)) p n
+({) N
+(  ) S
+(if) K
+( \(decimal == 0\) {) p
+(//decimal: 0) c n
+(    ) p
+(return) K
+( 0b11000000;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 1\) {) p
+(//decimal: 1) c n
+(    ) p
+(return) K
+( 0b11111001;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 2\) {) p
+(//decimal: 2) c n
+(    ) p
+(return) K
+( 0b10100100;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 3\) {) p
+(//decimal: 3) c n
+(    ) p
+(return) K
+( 0b10110000;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 4\) {) p
+(//deciaml: 4) c n
+(    ) p
+(return) K
+( 0b10011001;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 5\) {) p
+(//decimal: 5) c n
+(    ) p
+(return) K
+( 0b10010010;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 6\) {) p
+(//deciaml: 6) c n
+(    ) p
+(return) K
+( 0b10000010;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 7\) {) p
+(//decimal: 7) c n
+(    ) p
+(return) K
+( 0b11111000;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 8\) {) p
+(//decimal: 8) c n
+(    ) p
+(return) K
+( 0b10000000;) p n
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(decimal == 9\) {) p
+(//decimal: 9) c n
+(    ) p
+(return) K
+( 0b10010000;) p n
+(  }) N
+(  ) S
+(//should never reach this return) c n
+(  ) p
+(return) K
+( 0b11111111;) p
+(// All segments OFF) c n
+(lab2_ml2.c) (Page 1/3) (Oct 16, 19 18:52) title
+border
+/v 1 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(}) p n
+() N
+(//******************************************************************************) c n
+(*****) N
+(//                                   segment_sum) N
+(//takes a 16-bit binary input value and places the appropriate equivalent 4 digi) N
+(t) N
+(//BCD segment code in the array segment_data for display.) N
+(//array is loaded at exit as:  |digit0|digit1|colon\(digit2\)|digit3|digit4|) N
+(void) k
+( segsum\(uint16_t sum\) {) p n
+(  uint8_t thousands = \(sum/1000\)%10;) S
+(//parses the thousands places) c n
+(  uint8_t hundreds  = \(sum/100\)%10;) p
+(//parses the hundreds place) c n
+(  uint8_t tens      = \(sum/10\)%10;) p
+(//parses the tens places) c n
+(  uint8_t ones      = \(sum%10\);) p
+(//parses the ones place) c n
+() p n
+(  ) S
+(//decoded numbers) c n
+(  segment_data[0] = decoder\(thousands\);) p
+(//thousands) c n
+(  segment_data[1] = decoder\(hundreds\);) p
+(//hundreds) c n
+(  segment_data[2] = 0b11111111;) p
+(//everyting off for colon) c n
+(  segment_data[3] = decoder\(tens\);) p
+(//tens) c n
+(  segment_data[4] = decoder\(ones\);) p
+(//ones) c n
+() p n
+(  ) S
+(//blank out leading zero digits) c n
+(  ) p
+(// and move data to right place for misplaced colon position) c n
+(  ) p
+(if) K
+( \(\(thousands == 0\) && \(hundreds==0\) && \(tens ==0\)\) {) p
+(// three leading zeros) c n
+(    segment_data[0] = 0b11111111;) p n
+(    segment_data[1] = 0b11111111;) N
+(    segment_data[3] = 0b11111111;) N
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(\(thousands==0\) && \(hundreds==0\)\) {) p
+(// two leading zeros) c n
+(    segment_data[0] = 0b11111111;) p n
+(    segment_data[1] = 0b11111111;) N
+(  }) S
+(else) K
+( ) p
+(if) K
+( \(thousands==0\){) p n
+(    segment_data[0] = 0b11111111;) S
+(//1 zero off) c n
+(  }) p n
+(}) S
+(//segment_sum) c n
+() p n
+(/***********************************************************************) c n
+(Function: update_count\(\)) N
+(Description:) N
+(  This function will update the the counter value based on the buttons that are) N
+(  pressed.) N
+(Parameters:) N
+(  -uint16_t *cnt_val:) N
+(    This should be the current value of the counter. This value will be updated) N
+(    to reflec the increment of the button pushed.) N
+(Return:) N
+(  This will not return anything, but it updates the value that is passed to it.) N
+(  This is done because it passed as a pointer) N
+(************************************************************************/) N
+(void) k
+( update_count\(uint16_t *cnt_val\){) p n
+(  ) S
+(for) K
+( \(uint8_t n = 0; n < 8; n++\) {) p
+(//read in all buttons) c n
+(    ) p
+(if) K
+(\(debounce_switch\(n\)\){) p n
+(      ) S
+(if) K
+( \(n ==0\) {) p
+(//button J8) c n
+(        *cnt_val += 128;) p n
+(      }) S
+(else) K
+( ) p
+(if) K
+( \(n==1\) {) p
+(//button J7) c n
+(        *cnt_val +=64;) p n
+(      }) S
+(else) K
+( ) p
+(if) K
+( \(n==2\) {) p
+(//button J6) c n
+(        *cnt_val+=32;) p n
+(      }) S
+(else) K
+( ) p
+(if) K
+( \(n==3\) {) p
+(//button J5) c n
+(        *cnt_val +=16;) p n
+(      }) S
+(else) K
+( ) p
+(if) K
+( \(n==4\) {) p
+(//button J4) c n
+(        *cnt_val += 8;) p n
+(      }) S
+(else) K
+( ) p
+(if) K
+( \(n==5\) {) p
+(//button J3) c n
+(        *cnt_val+=4;) p n
+(      }) S
+(else) K
+( ) p
+(if) K
+( \(n==6\) {) p
+(//button J2) c n
+(        *cnt_val+=2;) p n
+(      }) S
+(else) K
+({) p
+(//button J1) c n
+(        *cnt_val+=1;) p n
+(      }) N
+(lab2_ml2.c) (Page 2/3) (Oct 16, 19 18:52) title
+border
+grestore
+(Printed by Manuel Lopez) rhead
+(lab2_ml2.c) (1/2) (Wednesday October 16, 2019) footer
+end % of iso1dict
+pagesave restore
+showpage
+%%Page: (3) 2
+%%BeginPageSetup
+/pagesave save def
+sh 0 translate 90 rotate
+%%EndPageSetup
+iso1dict begin
+gsave
+llx lly 12 add translate
+/v 0 store
+/x0 x v get 3.147420 add sx cw mul add store
+/y0 y v get bfs th add sub store
+x0 y0 moveto
+(    }) p n
+(  }) N
+(}) N
+() N
+(int) k
+( main\(\)) p n
+({) N
+(DDRB = 0xF0;) S
+(//set port bits 4-7 B as outputs) c n
+(uint16_t cnt_val = 0;) p
+(//counter to be displayed) c n
+(uint8_t digit_sel = 0;) p
+(// digit to be selected for display) c n
+(while) K
+(\(1\){) p n
+(  _delay_ms\(2\);) S
+(//insert loop delay for debounce) c n
+(  DDRA = 0x00;) p
+(//make PORTA an input Port) c n
+(  PORTA = 0xFF;) p
+(// pullups) c n
+(  PORTB = 0xF0;) p
+(//enable tristate buffer for pushbutton switches) c n
+(  update_count\(&cnt_val\);) p
+(//now check each button and increment the count as need) c n
+(ed) N
+(  PORTB = 0xE0;) p
+(//disable tristate buffer for pushbutton switches) c n
+(  ) p
+(if) K
+( \(cnt_val > 1023\) {) p
+(//bound the count to 0 - 1023) c n
+(    cnt_val = 0;) p n
+(  }) N
+(  segsum\(cnt_val\);) S
+(//break up the disp_value to 4, BCD digits in the array: call ) c n
+(\(segsum\)) N
+() p n
+(  ) S
+(if) K
+( \(digit_sel > 4\) {) p
+(//bound a counter \(0-4\) to keep track of digit to display) c n
+(    digit_sel=0;) p n
+(  }) N
+(  DDRA = 0xFF;) S
+(//make PORTA an output) c n
+(  PORTA = segment_data[digit_sel];) p
+(//send 7 segment code to LED segments) c n
+(  ) p
+(//send PORTB the digit to display) c n
+(  ) p
+(if) K
+( \(digit_sel == 0\) {) p n
+(    PORTB = 0b01000000;) S
+(//thousands digit) c n
+(  }) p
+(else) K
+( ) p
+(if) K
+( \(digit_sel==1\) {) p n
+(    PORTB = 0b00110000;) S
+(//hundreds digit) c n
+(  }) p
+(else) K
+( ) p
+(if) K
+( \(digit_sel==2\) {) p n
+(    PORTB = 0b00100000;) S
+(//colon digit) c n
+(  }) p
+(else) K
+( ) p
+(if) K
+( \(digit_sel==3\) {) p n
+(    PORTB = 0b00010000;) S
+(//tens digit) c n
+(  }) p
+(else) K
+( ) p
+(if) K
+( \(digit_sel==4\) {) p n
+(    PORTB =0b00000000;) S
+(//one digit) c n
+(  }) p n
+(  digit_sel++;) S
+(//update digit to display\(increment\)) c n
+(  }) p
+(//while) c n
+(  ) p
+(return) K
+( 0;) p n
+(}) S
+(//main) c n
+(lab2_ml2.c) (Page 3/3) (Oct 16, 19 18:52) title
+border
+grestore
+(Printed by Manuel Lopez) rhead
+(lab2_ml2.c) (2/2) (Wednesday October 16, 2019) footer
+end % of iso1dict
+pagesave restore
+showpage
+
+%%Trailer
+end
+%%EOF
