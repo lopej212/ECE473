@@ -1,0 +1,257 @@
+
+testDecoder.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  0000014c  000001e0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000014c  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000001  00800100  00800100  000001e0  2**0
+                  ALLOC
+  3 .stab         00000708  00000000  00000000  000001e0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000d0c  00000000  00000000  000008e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      00000011  00000000  00000000  000015f4  2**0
+                  CONTENTS, READONLY
+  6 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00001608  2**2
+                  CONTENTS, READONLY
+  7 .debug_info   00000780  00000000  00000000  00001644  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 00000718  00000000  00000000  00001dc4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   0000001a  00000000  00000000  000024dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000027d  00000000  00000000  000024f6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 46 00 	jmp	0x8c	; 0x8c <__ctors_end>
+   4:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+   8:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+   c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  10:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  14:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  18:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  1c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  20:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  24:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  28:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  2c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  30:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  34:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  38:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  3c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  40:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  44:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  48:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  4c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  50:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  54:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  58:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  5c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  60:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  64:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  68:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  6c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  70:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  74:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  78:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  7c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  80:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  84:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  88:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e1       	ldi	r29, 0x10	; 16
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_clear_bss>:
+  98:	21 e0       	ldi	r18, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	01 c0       	rjmp	.+2      	; 0xa2 <.do_clear_bss_start>
+
+000000a0 <.do_clear_bss_loop>:
+  a0:	1d 92       	st	X+, r1
+
+000000a2 <.do_clear_bss_start>:
+  a2:	a1 30       	cpi	r26, 0x01	; 1
+  a4:	b2 07       	cpc	r27, r18
+  a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
+  a8:	0e 94 7a 00 	call	0xf4	; 0xf4 <main>
+  ac:	0c 94 a4 00 	jmp	0x148	; 0x148 <_exit>
+
+000000b0 <__bad_interrupt>:
+  b0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000b4 <spi_init>:
+//***********************************************************************
+//                            spi_init
+//**********************************************************************
+void spi_init(void){
+
+  DDRB   = 0x97; //output mode for SS, MOSI, SCLK, and output for OE_EN
+  b4:	87 e9       	ldi	r24, 0x97	; 151
+  b6:	87 bb       	out	0x17, r24	; 23
+
+  SPCR   = (1<<SPE) | (1<<MSTR) ; //master mode, clk low on idle, leading edge sample
+  b8:	80 e5       	ldi	r24, 0x50	; 80
+  ba:	8d b9       	out	0x0d, r24	; 13
+
+  SPSR   = (1<<SPI2X); //choose double speed operation
+  bc:	81 e0       	ldi	r24, 0x01	; 1
+  be:	8e b9       	out	0x0e, r24	; 14
+  c0:	08 95       	ret
+
+000000c2 <spi_read>:
+ }
+
+ uint8_t spi_read(void)
+{
+  SPDR = 0x00;
+  c2:	1f b8       	out	0x0f, r1	; 15
+  while (bit_is_clear(SPSR,SPIF)) {}
+  c4:	77 9b       	sbis	0x0e, 7	; 14
+  c6:	fe cf       	rjmp	.-4      	; 0xc4 <spi_read+0x2>
+  return(SPDR);
+  c8:	8f b1       	in	r24, 0x0f	; 15
+}
+  ca:	08 95       	ret
+
+000000cc <decoder_read>:
+
+void decoder_read(){
+  PORTE ^= (1<<SH_LD);//toggle to low
+  cc:	93 b1       	in	r25, 0x03	; 3
+  ce:	80 e4       	ldi	r24, 0x40	; 64
+  d0:	98 27       	eor	r25, r24
+  d2:	93 b9       	out	0x03, r25	; 3
+  PORTE ^= (1<<SH_LD);//toggle back to high
+  d4:	93 b1       	in	r25, 0x03	; 3
+  d6:	89 27       	eor	r24, r25
+  d8:	83 b9       	out	0x03, r24	; 3
+  PORTE ^= (1<<CLK_INH);//toggle to low
+  da:	83 b1       	in	r24, 0x03	; 3
+  dc:	80 58       	subi	r24, 0x80	; 128
+  de:	83 b9       	out	0x03, r24	; 3
+  SPSR   = (1<<SPI2X); //choose double speed operation
+ }
+
+ uint8_t spi_read(void)
+{
+  SPDR = 0x00;
+  e0:	1f b8       	out	0x0f, r1	; 15
+  while (bit_is_clear(SPSR,SPIF)) {}
+  e2:	77 9b       	sbis	0x0e, 7	; 14
+  e4:	fe cf       	rjmp	.-4      	; 0xe2 <decoder_read+0x16>
+  return(SPDR);
+  e6:	8f b1       	in	r24, 0x0f	; 15
+
+void decoder_read(){
+  PORTE ^= (1<<SH_LD);//toggle to low
+  PORTE ^= (1<<SH_LD);//toggle back to high
+  PORTE ^= (1<<CLK_INH);//toggle to low
+  value_decoder = spi_read();
+  e8:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
+  PORTE ^= (1<<CLK_INH);//toggle to high
+  ec:	83 b1       	in	r24, 0x03	; 3
+  ee:	80 58       	subi	r24, 0x80	; 128
+  f0:	83 b9       	out	0x03, r24	; 3
+  f2:	08 95       	ret
+
+000000f4 <main>:
+//***********************************************************************
+//                            spi_init
+//**********************************************************************
+void spi_init(void){
+
+  DDRB   = 0x97; //output mode for SS, MOSI, SCLK, and output for OE_EN
+  f4:	87 e9       	ldi	r24, 0x97	; 151
+  f6:	87 bb       	out	0x17, r24	; 23
+
+  SPCR   = (1<<SPE) | (1<<MSTR) ; //master mode, clk low on idle, leading edge sample
+  f8:	80 e5       	ldi	r24, 0x50	; 80
+  fa:	8d b9       	out	0x0d, r24	; 13
+
+  SPSR   = (1<<SPI2X); //choose double speed operation
+  fc:	81 e0       	ldi	r24, 0x01	; 1
+  fe:	8e b9       	out	0x0e, r24	; 14
+
+
+
+ int main(){
+   spi_init();
+   DDRE = 0xC0;//ouput for LD and CLK_INH
+ 100:	80 ec       	ldi	r24, 0xC0	; 192
+ 102:	82 b9       	out	0x02, r24	; 2
+   PORTE = 0xC0;//set them as HIGH
+ 104:	83 b9       	out	0x03, r24	; 3
+   PORTB |= (1<<OE_EN);//disable the bar graph (low enable)
+ 106:	c7 9a       	sbi	0x18, 7	; 24
+
+   while(1){
+     decoder_read();
+     if (value_decoder==0xF3) {
+       _delay_ms(500);
+       PORTB ^= (1<<PB4);
+ 108:	c0 e1       	ldi	r28, 0x10	; 16
+   DDRE = 0xC0;//ouput for LD and CLK_INH
+   PORTE = 0xC0;//set them as HIGH
+   PORTB |= (1<<OE_EN);//disable the bar graph (low enable)
+
+   while(1){
+     decoder_read();
+ 10a:	0e 94 66 00 	call	0xcc	; 0xcc <decoder_read>
+     if (value_decoder==0xF3) {
+ 10e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 112:	83 3f       	cpi	r24, 0xF3	; 243
+ 114:	d1 f7       	brne	.-12     	; 0x10a <main+0x16>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 116:	2f ef       	ldi	r18, 0xFF	; 255
+ 118:	89 e6       	ldi	r24, 0x69	; 105
+ 11a:	98 e1       	ldi	r25, 0x18	; 24
+ 11c:	21 50       	subi	r18, 0x01	; 1
+ 11e:	80 40       	sbci	r24, 0x00	; 0
+ 120:	90 40       	sbci	r25, 0x00	; 0
+ 122:	e1 f7       	brne	.-8      	; 0x11c <main+0x28>
+ 124:	00 c0       	rjmp	.+0      	; 0x126 <main+0x32>
+ 126:	00 00       	nop
+       _delay_ms(500);
+       PORTB ^= (1<<PB4);
+ 128:	88 b3       	in	r24, 0x18	; 24
+ 12a:	8c 27       	eor	r24, r28
+ 12c:	88 bb       	out	0x18, r24	; 24
+ 12e:	2f ef       	ldi	r18, 0xFF	; 255
+ 130:	89 e6       	ldi	r24, 0x69	; 105
+ 132:	98 e1       	ldi	r25, 0x18	; 24
+ 134:	21 50       	subi	r18, 0x01	; 1
+ 136:	80 40       	sbci	r24, 0x00	; 0
+ 138:	90 40       	sbci	r25, 0x00	; 0
+ 13a:	e1 f7       	brne	.-8      	; 0x134 <main+0x40>
+ 13c:	00 c0       	rjmp	.+0      	; 0x13e <main+0x4a>
+ 13e:	00 00       	nop
+       _delay_ms(500);
+       PORTB ^= (1<<PB4);
+ 140:	88 b3       	in	r24, 0x18	; 24
+ 142:	8c 27       	eor	r24, r28
+ 144:	88 bb       	out	0x18, r24	; 24
+ 146:	e1 cf       	rjmp	.-62     	; 0x10a <main+0x16>
+
+00000148 <_exit>:
+ 148:	f8 94       	cli
+
+0000014a <__stop_program>:
+ 14a:	ff cf       	rjmp	.-2      	; 0x14a <__stop_program>
