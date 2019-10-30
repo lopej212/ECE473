@@ -1,0 +1,22 @@
+Lab 1 Question:
+
+Q: Did the execution of the makefile create any warnings? What do you think is going on with the makefile? Briefly write up what you think to hand in.
+
+A: The only warning that I got was when the make file tries to set the 
+frequency of the microcontroller. I believe that the software that handles is able to set it properly and thus the program works as it is supposed to. It gives me this warning twice, but regardless of this warning the program works fine.
+
+
+Makefile Description:
+
+Lines 1-8: This section is setting up the variables that will be used for the rest of the makefile.
+Lines 9-10: This section sets the correct flags for the compiler and the linker. 
+Lines 12-12: These lines will be used to extract  the downloadable portion of a .elf file to build the flash image and get information on .elf file. 
+Line 15: All is a phony target. 
+Lines 17-18: This creates lab1_code.elf file using the commands in this rule
+Lines 20-24: Runs clean command for any existing files. 
+Lines 27-28: creates rule for making the program
+Lines 30-34: Creates pattern rule for creating .lst from .elf
+Lines 36-42: Creates rules for building the .text rom images. 
+Lines 43-51: Creates the .hex, .srec, and .bin files form .elf .
+Lines 56-58: Sets rules for building .eeprom rom images
+Lines 60-67: Creates the _eeprom.hex, _eeprom.srec, and _eeprom.bin from the elf file.
