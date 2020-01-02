@@ -1,0 +1,208 @@
+
+bar_graph_noints_skel.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00000138  000001ac  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000138  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .stab         000005e8  00000000  00000000  000001ac  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000cee  00000000  00000000  00000794  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      00000011  00000000  00000000  00001482  2**0
+                  CONTENTS, READONLY
+  5 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00001494  2**2
+                  CONTENTS, READONLY
+  6 .debug_info   00000780  00000000  00000000  000014d0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000718  00000000  00000000  00001c50  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000001a  00000000  00000000  00002368  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000027d  00000000  00000000  00002382  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 46 00 	jmp	0x8c	; 0x8c <__ctors_end>
+   4:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+   8:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+   c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  10:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  14:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  18:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  1c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  20:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  24:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  28:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  2c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  30:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  34:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  38:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  3c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  40:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  44:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  48:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  4c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  50:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  54:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  58:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  5c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  60:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  64:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  68:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  6c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  70:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  74:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  78:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  7c:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  80:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  84:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+  88:	0c 94 50 00 	jmp	0xa0	; 0xa0 <__bad_interrupt>
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e1       	ldi	r29, 0x10	; 16
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+  98:	0e 94 59 00 	call	0xb2	; 0xb2 <main>
+  9c:	0c 94 9a 00 	jmp	0x134	; 0x134 <_exit>
+
+000000a0 <__bad_interrupt>:
+  a0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000a4 <spi_init>:
+//***********************************************************************
+//                            spi_init
+//**********************************************************************
+void spi_init(void){
+
+  DDRB   = 0x07; //output mode for SS, MOSI, SCLK
+  a4:	87 e0       	ldi	r24, 0x07	; 7
+  a6:	87 bb       	out	0x17, r24	; 23
+
+  SPCR   = (1<<SPE) | (1<<MSTR) ; //master mode, clk low on idle, leading edge sample
+  a8:	80 e5       	ldi	r24, 0x50	; 80
+  aa:	8d b9       	out	0x0d, r24	; 13
+
+  SPSR   = (1<<SPI2X); //choose double speed operation
+  ac:	81 e0       	ldi	r24, 0x01	; 1
+  ae:	8e b9       	out	0x0e, r24	; 14
+  b0:	08 95       	ret
+
+000000b2 <main>:
+//***********************************************************************
+//                            spi_init
+//**********************************************************************
+void spi_init(void){
+
+  DDRB   = 0x07; //output mode for SS, MOSI, SCLK
+  b2:	87 e0       	ldi	r24, 0x07	; 7
+  b4:	87 bb       	out	0x17, r24	; 23
+
+  SPCR   = (1<<SPE) | (1<<MSTR) ; //master mode, clk low on idle, leading edge sample
+  b6:	80 e5       	ldi	r24, 0x50	; 80
+  b8:	8d b9       	out	0x0d, r24	; 13
+
+  SPSR   = (1<<SPI2X); //choose double speed operation
+  ba:	81 e0       	ldi	r24, 0x01	; 1
+  bc:	8e b9       	out	0x0e, r24	; 14
+
+    SPDR = display_count;//send display_count to the display
+
+    while (bit_is_clear(SPSR,SPIF)){} //spin till SPI data has been sent
+
+    PORTB ^= 0x01;	    //send rising edge to regclk on HC595
+  be:	21 e0       	ldi	r18, 0x01	; 1
+uint8_t i; //dummy counter
+
+spi_init();  //initalize SPI port
+while(1){                             //main while loop
+
+    SPDR = display_count;//send display_count to the display
+  c0:	8f b9       	out	0x0f, r24	; 15
+
+    while (bit_is_clear(SPSR,SPIF)){} //spin till SPI data has been sent
+  c2:	77 9b       	sbis	0x0e, 7	; 14
+  c4:	fe cf       	rjmp	.-4      	; 0xc2 <main+0x10>
+
+    PORTB ^= 0x01;	    //send rising edge to regclk on HC595
+  c6:	98 b3       	in	r25, 0x18	; 24
+  c8:	92 27       	eor	r25, r18
+  ca:	98 bb       	out	0x18, r25	; 24
+
+    PORTB ^= 0x01;            //send falling edge to regclk on HC595
+  cc:	98 b3       	in	r25, 0x18	; 24
+  ce:	92 27       	eor	r25, r18
+  d0:	98 bb       	out	0x18, r25	; 24
+
+    display_count = (display_count<<1);//shift display_count for next time
+  d2:	88 0f       	add	r24, r24
+
+    if(display_count == 0x00){
+  d4:	09 f4       	brne	.+2      	; 0xd8 <main+0x26>
+    display_count = 0x01;
+  d6:	81 e0       	ldi	r24, 0x01	; 1
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  d8:	3f ef       	ldi	r19, 0xFF	; 255
+  da:	41 ee       	ldi	r20, 0xE1	; 225
+  dc:	94 e0       	ldi	r25, 0x04	; 4
+  de:	31 50       	subi	r19, 0x01	; 1
+  e0:	40 40       	sbci	r20, 0x00	; 0
+  e2:	90 40       	sbci	r25, 0x00	; 0
+  e4:	e1 f7       	brne	.-8      	; 0xde <main+0x2c>
+  e6:	00 c0       	rjmp	.+0      	; 0xe8 <main+0x36>
+  e8:	00 00       	nop
+  ea:	3f ef       	ldi	r19, 0xFF	; 255
+  ec:	41 ee       	ldi	r20, 0xE1	; 225
+  ee:	94 e0       	ldi	r25, 0x04	; 4
+  f0:	31 50       	subi	r19, 0x01	; 1
+  f2:	40 40       	sbci	r20, 0x00	; 0
+  f4:	90 40       	sbci	r25, 0x00	; 0
+  f6:	e1 f7       	brne	.-8      	; 0xf0 <main+0x3e>
+  f8:	00 c0       	rjmp	.+0      	; 0xfa <main+0x48>
+  fa:	00 00       	nop
+  fc:	3f ef       	ldi	r19, 0xFF	; 255
+  fe:	41 ee       	ldi	r20, 0xE1	; 225
+ 100:	94 e0       	ldi	r25, 0x04	; 4
+ 102:	31 50       	subi	r19, 0x01	; 1
+ 104:	40 40       	sbci	r20, 0x00	; 0
+ 106:	90 40       	sbci	r25, 0x00	; 0
+ 108:	e1 f7       	brne	.-8      	; 0x102 <main+0x50>
+ 10a:	00 c0       	rjmp	.+0      	; 0x10c <main+0x5a>
+ 10c:	00 00       	nop
+ 10e:	3f ef       	ldi	r19, 0xFF	; 255
+ 110:	41 ee       	ldi	r20, 0xE1	; 225
+ 112:	94 e0       	ldi	r25, 0x04	; 4
+ 114:	31 50       	subi	r19, 0x01	; 1
+ 116:	40 40       	sbci	r20, 0x00	; 0
+ 118:	90 40       	sbci	r25, 0x00	; 0
+ 11a:	e1 f7       	brne	.-8      	; 0x114 <main+0x62>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <main+0x6c>
+ 11e:	00 00       	nop
+ 120:	3f ef       	ldi	r19, 0xFF	; 255
+ 122:	41 ee       	ldi	r20, 0xE1	; 225
+ 124:	94 e0       	ldi	r25, 0x04	; 4
+ 126:	31 50       	subi	r19, 0x01	; 1
+ 128:	40 40       	sbci	r20, 0x00	; 0
+ 12a:	90 40       	sbci	r25, 0x00	; 0
+ 12c:	e1 f7       	brne	.-8      	; 0x126 <main+0x74>
+ 12e:	00 c0       	rjmp	.+0      	; 0x130 <main+0x7e>
+ 130:	00 00       	nop
+ 132:	c6 cf       	rjmp	.-116    	; 0xc0 <main+0xe>
+
+00000134 <_exit>:
+ 134:	f8 94       	cli
+
+00000136 <__stop_program>:
+ 136:	ff cf       	rjmp	.-2      	; 0x136 <__stop_program>
